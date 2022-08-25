@@ -9,6 +9,9 @@ module.exports = {
       fontFamily: {
         cursive: ['Lobster Two', 'cursive'],
       },
+      colors: {
+        main: '#d1411e',
+      },
     },
   },
   plugins: [],
