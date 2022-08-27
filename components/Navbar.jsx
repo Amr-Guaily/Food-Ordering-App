@@ -1,8 +1,14 @@
 import Image from 'next/image';
+import Link from 'next/link';
+
 const Navbar = () => {
   return (
-    <div className="sticky h-16 bg-tranparent text-white flex items-center justify-between px-4 z-50 bg-main">
-      <h1 className=" font-cursive text-3xl font-semibold">Pizza Home</h1>
+    <div className="sticky top-0 h-16 bg-tranparent text-white flex items-center justify-between px-4 z-50 bg-main">
+      <Link href="/">
+        <h1 className=" font-cursive text-3xl font-semibold cursor-pointer">
+          Pizza Home
+        </h1>
+      </Link>
       <div className="relative mr-3 cursor-pointer">
         <Image src="/imgs/cart.png" width="30px" height="30px"></Image>
         <div className="flex items-center justify-center absolute top-[-8px] right-[-10px] h-5 w-5 bg-white rounded-full text-black/40 font-semibold cursor-pointer">
