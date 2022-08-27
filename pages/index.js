@@ -1,8 +1,10 @@
-import { Featured } from '../components/index';
+import { Featured, PizzaGrid, Footer } from '../components/index';
 export default function Home() {
   return (
     <div>
       <Featured />
+      <PizzaGrid />
+      <Footer />
     </div>
   );
 }

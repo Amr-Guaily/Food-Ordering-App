@@ -23,9 +23,8 @@ const Featured = () => {
     return idx;
   }
 
-  console.log(index);
   return (
-    <div className="relative h-screen bg-main mt-[-4rem] overflow-hidden ">
+    <div className="relative h-[26rem] md:h-screen bg-main mt-[-4rem] overflow-hidden ">
       <div
         className="absolute top-[50%] left-3 cursor-pointer z-10"
         onClick={prevIndex}
