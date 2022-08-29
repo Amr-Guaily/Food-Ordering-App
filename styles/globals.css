@@ -1,3 +1,37 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Order Tracking */
+@layer components {
+  .done {
+    @apply flex items-center flex-col;
+  }
+  .inprogress {
+    @apply flex items-center flex-col animate-toggle;
+  }
+  .undone {
+    @apply flex items-center flex-col opacity-30;
+  }
+}
+
+/* Table Custom Style */
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+th,
+td {
+  text-align: left;
+  padding: 8px;
+}
+tr:nth-child(even) {
+  background-color: #d6eeee;
+}
+@media (max-width: 480px) {
+  td,
+  th {
+    padding: 0;
+    font-size: 13px;
+  }
+}

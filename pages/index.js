@@ -4,7 +4,6 @@ export default function Home() {
     <div>
       <Featured />
       <PizzaGrid />
-      <Footer />
     </div>
   );
 }
