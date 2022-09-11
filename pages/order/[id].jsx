@@ -1,10 +1,10 @@
 import { OrderTrack } from '../../components/index';
-// const ICONS = [
-//   { name: 'Payment', src: '/imgs/paid.png' },
-//   { name: 'Prepering', src: '/imgs/bake.png' },
-//   { name: 'On the way', src: '/imgs/bike.png' },
-//   { name: 'Delivered', src: '/imgs/delivered.png' },
-// ];
+const ICONS = [
+  { name: 'payment', src: '/imgs/paid.png' },
+  { name: 'prepering', src: '/imgs/bake.png' },
+  { name: 'onTheWay', src: '/imgs/bike.png' },
+  { name: 'delivered', src: '/imgs/delivered.png' },
+];
 
 const Order = () => {
   return (
@@ -33,7 +33,9 @@ const Order = () => {
         <hr />
 
         <div className="flex justify-between sm:w-[90%] lg:w-[70%]">
-          <OrderTrack />
+          {ICONS.map((icon) => (
+            <OrderTrack key={icon.src} icon={icon} />
+          ))}
         </div>
       </div>
 

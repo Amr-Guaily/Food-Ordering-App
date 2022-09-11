@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { useState } from 'react';
+
 const dummy_data = {
   id: 1,
   imgUrl:
@@ -13,7 +14,7 @@ const PizzaDetails = () => {
   const [index, setIndex] = useState(0);
 
   return (
-    <div className="w-[90%] md:w-[75%] mx-auto flex flex-col lg:flex-row gap-6 justify-center my-[3rem]">
+    <div className="w-[90%] md:w-[75%] mx-auto flex flex-col lg:flex-row gap-6 justify-center mt-[3rem] pb-20">
       <div className="lg:w-[50%] lg:max-w-[450px]">
         <img
           src={dummy_data.imgUrl}
