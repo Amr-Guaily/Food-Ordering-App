@@ -1,4 +1,4 @@
-import { Featured, PizzaGrid, Footer } from '../components/index';
+import { Featured, PizzaGrid } from 'components/index';
 export default function Home() {
   return (
     <div>
