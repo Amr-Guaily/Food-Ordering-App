@@ -10,36 +10,50 @@ const dummy_data = {
   desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis arcu purus, rhoncus fringilla vestibulum vel, dignissim vel ante. Nulla facilisi. Nullam a urna sit amet tellus pellentesque egestas in in ante.',
 };
 
-const PizzaDetails = () => {
-  const [index, setIndex] = useState(0);
+const PizzaDetails = ({ pizzaData }) => {
+  const [price, setPrice] = useState({
+    original: pizzaData.prices[0],
+    additional: 0,
+  });
+  const { title, prices, desc, extraOptions } = pizzaData;
 
+  const changeHandler = (e) => {
+    const { checked, value } = e.target;
+    if (checked) {
+      setPrice((prev) => ({ ...prev, additional: prev.additional + +value }));
+    } else {
+      setPrice((prev) => ({ ...prev, additional: prev.additional - +value }));
+    }
+  };
   return (
-    <div className="w-[90%] md:w-[75%] mx-auto flex flex-col lg:flex-row gap-6 justify-center mt-[3rem] pb-20">
-      <div className="lg:w-[50%] lg:max-w-[450px]">
+    <div className="w-[95%] md:w-[80%] mx-auto flex flex-col sm:flex-row gap-6 justify-center mt-[3rem] pb-20">
+      <div className="w-full max-w-[450px] mx-auto">
         <img
           src={dummy_data.imgUrl}
-          className="object-cover rounded-md w-full max-h-[550px]"
+          className="object-cover rounded-md w-full max-h-[450px]"
           alt="pizza-image"
         />
       </div>
 
       {/* Right Side */}
-      <div className="flex-1 p-4 text-center lg:text-start">
+      <div className="flex-1 px-4 text-center sm:text-start">
         <h1 className="font-bold text-gray-800 text-2xl tracking-wide">
-          {dummy_data.name}
+          {title}
         </h1>
         <span className="font-bold text-red-600 block my-2 text-lg underline">
-          ${dummy_data.price[index]}
+          ${price.original + price.additional}
         </span>
-        <p className="text-gray-500 leading-5">{dummy_data.desc}</p>
+        <p className="text-gray-500 leading-5">{desc}</p>
 
-        {/* Choose ize */}
+        {/* Choose Size */}
         <div className="my-4">
           <h2 className="font-bold text-gray-800 text-xl">Choose The Size</h2>
-          <div className="flex justify-center lg:justify-start gap-14 mt-6">
+          <div className="flex justify-center sm:justify-start gap-14 mt-6">
             <div
               className="relative cursor-pointer"
-              onClick={() => setIndex(0)}
+              onClick={() =>
+                setPrice((prev) => ({ ...prev, original: prices[0] }))
+              }
             >
               <Image src="/imgs/size.png" width="30px" height="30px" alt="" />
               <span className="absolute px-2 top-[-8px] left-[50%] text-sm text-white rounded-xl bg-green-600 font-semibold">
@@ -48,7 +62,9 @@ const PizzaDetails = () => {
             </div>
             <div
               className="relative cursor-pointer"
-              onClick={() => setIndex(1)}
+              onClick={() =>
+                setPrice((prev) => ({ ...prev, original: prices[1] }))
+              }
             >
               <Image src="/imgs/size.png" width="40px" height="40px" alt="" />
               <span className="absolute px-2  top-[-8px] left-[50%] text-sm text-white rounded-xl bg-green-600 font-semibold">
@@ -57,7 +73,9 @@ const PizzaDetails = () => {
             </div>
             <div
               className="relative cursor-pointer"
-              onClick={() => setIndex(2)}
+              onClick={() =>
+                setPrice((prev) => ({ ...prev, original: prices[2] }))
+              }
             >
               <Image src="/imgs/size.png" width="50px" height="50px" alt="" />
               <span className="absolute px-2 top-[-8px] left-[50%] text-sm  text-white rounded-xl bg-green-600 font-semibold flex">
@@ -72,43 +90,20 @@ const PizzaDetails = () => {
           <h2 className="font-bold text-gray-800 text-xl">
             Choose Additional Ingredients
           </h2>
-          <div className="flex items-center flex-wrap gap-3 my-4">
-            <div className="flex items-center gap-2">
-              <input
-                type="checkbox"
-                id="double"
-                name="double"
-                className="w-4 h-4"
-              />
-              <label htmlFor="double">Double Ingredients</label>
-            </div>
-            <div className="flex items-center gap-2">
-              <input
-                className="w-4 h-4"
-                type="checkbox"
-                id="cheese"
-                name="cheese"
-              />
-              <label htmlFor="cheese">Extra Cheese</label>
-            </div>
-            <div className="flex items-center gap-2">
-              <input
-                className="w-4 h-4"
-                type="checkbox"
-                id="spicy"
-                name="spicy"
-              />
-              <label htmlFor="spicy">Spicy Sauce</label>
-            </div>
-            <div className="flex items-center gap-2">
-              <input
-                className="w-4 h-4"
-                type="checkbox"
-                id="garlic"
-                name="garlic"
-              />
-              <label htmlFor="garlic">Garlic Sauce</label>
-            </div>
+          {}
+          <div className="flex items-center justify-center sm:justify-start flex-wrap gap-3 my-4">
+            {extraOptions.map((option) => (
+              <div key={option._id} className="flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  id={option.text}
+                  value={option.price}
+                  onChange={changeHandler}
+                  className="w-4 h-4"
+                />
+                <label htmlFor={option._id}>{option.text}</label>
+              </div>
+            ))}
           </div>
         </div>
 
@@ -129,3 +124,15 @@ const PizzaDetails = () => {
 };
 
 export default PizzaDetails;
+
+export async function getServerSideProps({ params }) {
+  const doc = fetch(`http://localhost:3000/api/products/${params.id}`).then(
+    (res) => res.json()
+  );
+
+  return {
+    props: {
+      pizzaData: await doc,
+    },
+  };
+}
