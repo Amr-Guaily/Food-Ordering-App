@@ -1,4 +1,6 @@
+import { useCart } from 'context/CartContext';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 
 const dummy_data = {
@@ -15,19 +17,49 @@ const PizzaDetails = ({ pizzaData }) => {
     original: pizzaData.prices[0],
     additional: 0,
   });
+  const [extras, setExtras] = useState([]);
+  const [quantity, setQuantity] = useState(1);
+
+  const router = useRouter();
+  const { setCart } = useCart();
   const { title, prices, desc, extraOptions } = pizzaData;
 
-  const changeHandler = (e) => {
+  const changeHandler = (e, extraOpt) => {
     const { checked, value } = e.target;
     if (checked) {
       setPrice((prev) => ({ ...prev, additional: prev.additional + +value }));
+      setExtras((prev) => [...prev, extraOpt]);
     } else {
       setPrice((prev) => ({ ...prev, additional: prev.additional - +value }));
+      setExtras((prev) => prev.filter((item) => item !== extraOpt));
     }
   };
+
+  // ADD Piza to your cart
+  const submitHandler = () => {
+    const orderData = {
+      name: pizzaData.title,
+      img: dummy_data.imgUrl,
+      extras,
+      price: price.original + price.additional,
+      quantity,
+      total: (price.original + price.additional) * quantity,
+    };
+    fetch('http://localhost:3000/api/cart', {
+      method: 'POST',
+      body: JSON.stringify(orderData),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }).then(() => {
+      setCart((prev) => [...prev, orderData]);
+      router.push('/cart');
+    });
+  };
+
   return (
     <div className="w-[95%] md:w-[80%] mx-auto flex flex-col sm:flex-row gap-6 justify-center mt-[3rem] pb-20">
-      <div className="w-full max-w-[450px] mx-auto">
+      <div className="max-w-[450px] mx-auto">
         <img
           src={dummy_data.imgUrl}
           className="object-cover rounded-md w-full max-h-[450px]"
@@ -98,7 +130,7 @@ const PizzaDetails = ({ pizzaData }) => {
                   type="checkbox"
                   id={option.text}
                   value={option.price}
-                  onChange={changeHandler}
+                  onChange={(e) => changeHandler(e, option.text)}
                   className="w-4 h-4"
                 />
                 <label htmlFor={option._id}>{option.text}</label>
@@ -111,10 +143,15 @@ const PizzaDetails = ({ pizzaData }) => {
         <div className="mt-8">
           <input
             type="number"
-            defaultValue={1}
+            min={1}
+            value={quantity}
+            onChange={(e) => setQuantity(e.target.value)}
             className="bg-white border py-1 outline-none pl-2 w-[60px]"
           />
-          <button className="bg-main px-2 py-1 text-white rounded-r-md">
+          <button
+            onClick={submitHandler}
+            className="bg-main px-2 py-1 text-white rounded-r-md"
+          >
             Add to Cart
           </button>
         </div>
