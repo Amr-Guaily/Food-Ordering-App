@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { useCart } from 'context/CartContext';
 
 const ShoppingCart = () => {
-  const { cart } = useCart();
+  const { cart, deleteHandler, total } = useCart();
 
   return (
     <>
@@ -28,8 +28,8 @@ const ShoppingCart = () => {
             </thead>
             <tbody>
               {cart.map((product) => (
-                <tr key={product._id} className="">
-                  <td>
+                <tr key={product._id}>
+                  <td className="relative">
                     <Image
                       width="60"
                       height="60"
@@ -37,11 +37,24 @@ const ShoppingCart = () => {
                       src={product.img}
                       objectFit="contain"
                     />
+                    <span
+                      onClick={() => deleteHandler(product._id)}
+                      className="absolute w-4 h-4 cursor-pointer bg-red-400 top-0 left-0"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                      >
+                        <g fill="#FFFFFF">
+                          <path d="M19.5 4.5c-.8-.8-2.2-.8-3 0L12 9 7.5 4.5c-.8-.8-2.2-.8-3 0-.8.8-.8 2.2 0 3L9 12l-4.5 4.5c-.8.8-.8 2.2 0 3 .8.8 2.2.8 3 0L12 15l4.5 4.5c.8.8 2.2.8 3 0 .8-.8.8-2.2 0-3L15 12l4.5-4.5c.8-.8.8-2.2 0-3z"></path>
+                        </g>
+                      </svg>
+                    </span>
                   </td>
                   <td className="cart-td">{product.name}</td>
                   <td className="cart-td">
-                    {product.extras.map((opt) => (
-                      <span className="block text-sm" key={opt}>
+                    {product.extras?.map((opt, idx) => (
+                      <span className="block text-sm" key={idx}>
                         {opt}
                       </span>
                     ))}
@@ -54,9 +67,14 @@ const ShoppingCart = () => {
             </tbody>
           </table>
 
-          <div className="flex items-center gap-2 py-3 font-semibold text-slate-700 border-t-2 border-t-gray-500 mt-6">
-            <span className="text-lg">subTotal:</span>
-            <span className=" underline font-bold">$</span>
+          <div className="flex items-center justify-between py-3 border-t-2 border-t-gray-500 mt-6">
+            <div className="flex items-center gap-2 font-semibold text-slate-700">
+              <span className="text-lg">subTotal:</span>
+              <span className=" underline font-bold">${total}</span>
+            </div>
+            <button className="bg-main font-semibold px-3 py-1 text-white rounded-md">
+              Checkout
+            </button>
           </div>
         </div>
       )}

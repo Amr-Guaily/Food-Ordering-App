@@ -1,10 +1,8 @@
+import dbConnect from 'lib/mongo';
 import Product from 'models/Product';
-import mongoose from 'mongoose';
 
 export default async function handler(req, res) {
-  mongoose.connect(process.env.MONGO_URL, () => {
-    console.log('connected...');
-  });
+  await dbConnect();
 
   const {
     method,
