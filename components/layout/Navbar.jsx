@@ -13,7 +13,7 @@ const Navbar = () => {
       </Link>
       <Link href="/cart" passHref>
         <div className="relative mr-3 cursor-pointer">
-          <Image src="/imgs/cart.png" width="30px" height="30px"></Image>
+          <Image src="/imgs/cart.png" width="30px" height="30px" alt="cart" />
           <div className="flex items-center justify-center absolute top-[-8px] right-[-10px] h-5 w-5 bg-white rounded-full text-black/40 font-semibold cursor-pointer">
             <span>{cart.length}</span>
           </div>

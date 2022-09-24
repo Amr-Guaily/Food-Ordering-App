@@ -39,6 +39,7 @@ const ShoppingCart = () => {
                       className="rounded-full"
                       src={product.img}
                       objectFit="contain"
+                      alt="product-img"
                     />
                     <span
                       onClick={() => deleteHandler(product._id)}

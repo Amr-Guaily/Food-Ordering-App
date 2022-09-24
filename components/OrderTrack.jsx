@@ -15,11 +15,16 @@ const OrderTrack = ({ icon }) => {
 
   return (
     <div className={`flex flex-col items-center gap-1 ${state[icon.name]}`}>
-      <Image src={icon.src} width="45px" height="45px" />
+      <Image src={icon.src} width="45px" height="45px" alt="success-icon" />
       <span>{icon.name}</span>
 
       {state[icon.name] === 'done' && (
-        <Image src="/imgs/checked.png" width={20} height={20} />
+        <Image
+          src="/imgs/checked.png"
+          width={20}
+          height={20}
+          alt="order-status"
+        />
       )}
     </div>
   );

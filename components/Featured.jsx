@@ -29,7 +29,12 @@ const Featured = () => {
         className="absolute top-[50%] left-3 cursor-pointer z-10"
         onClick={prevIndex}
       >
-        <Image src="/imgs/arrowl.png" width="40px" height="40px" />
+        <Image
+          src="/imgs/arrowl.png"
+          width="40px"
+          height="40px"
+          alt="left-arrow"
+        />
       </div>
 
       <div className="w-[300vw] h-full flex">
@@ -39,7 +44,13 @@ const Featured = () => {
             key={img}
             style={{ transform: `translateX(${-100 * index}vw)` }}
           >
-            <Image src={img} layout="fill" priority objectFit="contain" />
+            <Image
+              src={img}
+              layout="fill"
+              priority
+              objectFit="contain"
+              alt="banner-img"
+            />
           </div>
         ))}
       </div>
@@ -48,7 +59,12 @@ const Featured = () => {
         className="absolute top-[50%] right-3 cursor-pointer"
         onClick={nextIndex}
       >
-        <Image src="/imgs/arrowr.png" width="40px" height="40px" />
+        <Image
+          src="/imgs/arrowr.png"
+          width="40px"
+          height="40px"
+          alt="right-arrow"
+        />
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 
-const login = () => {
+const Login = () => {
   const [formData, setFormData] = useState({
     name: '',
     password: '',
@@ -64,4 +64,4 @@ const login = () => {
   );
 };
 
-export default login;
+export default Login;
