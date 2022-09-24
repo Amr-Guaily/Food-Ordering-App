@@ -1,9 +1,12 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { useCart } from 'context/CartContext';
+import { useState } from 'react';
+import { Modal } from 'components/index';
 
 const ShoppingCart = () => {
   const { cart, deleteHandler, total } = useCart();
+  const [showModal, setShowModal] = useState(false);
 
   return (
     <>
@@ -72,10 +75,14 @@ const ShoppingCart = () => {
               <span className="text-lg">subTotal:</span>
               <span className=" underline font-bold">${total}</span>
             </div>
-            <button className="bg-main font-semibold px-3 py-1 text-white rounded-md">
+            <button
+              onClick={() => setShowModal(true)}
+              className="bg-main font-semibold px-3 py-1 text-white rounded-md hover:brightness-90"
+            >
               Checkout
             </button>
           </div>
+          {showModal && <Modal setModal={setShowModal} />}
         </div>
       )}
     </>

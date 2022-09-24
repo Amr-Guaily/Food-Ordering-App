@@ -44,6 +44,7 @@ export function CartProvidor({ children }) {
   };
 
   const context = { cart, setCart, deleteHandler, total };
+
   return (
     <CartContext.Provider value={context}>{children}</CartContext.Provider>
   );

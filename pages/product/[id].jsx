@@ -19,7 +19,6 @@ const PizzaDetails = ({ pizzaData }) => {
   });
   const [extras, setExtras] = useState([]);
   const [quantity, setQuantity] = useState(1);
-
   const router = useRouter();
   const { setCart } = useCart();
   const { title, prices, desc, extraOptions } = pizzaData;
