@@ -46,7 +46,8 @@ const PizzaDetails = ({ pizzaData }) => {
       quantity,
       total: (price.original + price.additional) * quantity,
     };
-    fetch('http://localhost:3000/api/cart', {
+
+    fetch('/api/cart', {
       method: 'POST',
       body: JSON.stringify(orderData),
       headers: {

@@ -16,12 +16,8 @@ export async function getServerSideProps({ req, res }) {
     // Trust User
     jwt.verify(req.cookies.adminToken, process.env.NEXT_PUPLIC_JWTSECRET);
     // Fetch Data
-    const products = await fetch('http://localhost:3000/api/products').then(
-      (res) => res.json()
-    );
-    const orders = await fetch('http://localhost:3000/api/orders').then((res) =>
-      res.json()
-    );
+    const products = await fetch('/api/products').then((res) => res.json());
+    const orders = await fetch('/api/orders').then((res) => res.json());
     return {
       props: {
         products,

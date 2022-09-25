@@ -31,7 +31,7 @@ export async function getServerSideProps() {
 
   return {
     props: {
-      products: await docs,
+      products,
     },
   };
 }
