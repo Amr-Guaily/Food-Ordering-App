@@ -1,4 +1,6 @@
 import { useCart } from 'context/CartContext';
+import dbConnect from 'lib/mongo';
+import Product from 'models/Product';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
@@ -162,13 +164,19 @@ const PizzaDetails = ({ pizzaData }) => {
 export default PizzaDetails;
 
 export async function getServerSideProps({ params }) {
-  const doc = fetch(`http://localhost:3000/api/products/${params.id}`).then(
-    (res) => res.json()
-  );
+  await dbConnect();
+  const doc = await Product.findById(params.id, { __v: 0 }, { lean: true });
+  const pizzaData = {
+    ...doc,
+    _id: JSON.parse(JSON.stringify(doc._id)),
+    extraOptions: doc.extraOptions.map((opt) =>
+      JSON.parse(JSON.stringify(opt))
+    ),
+  };
 
   return {
     props: {
-      pizzaData: await doc,
+      pizzaData,
     },
   };
 }
