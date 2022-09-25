@@ -5,9 +5,8 @@ import reactDom from 'react-dom';
 
 const Modal = ({ setModal }) => {
   const [orderData, setOrderData] = useState({
-    name: '',
-    adress: '',
-    phone: '',
+    customer: '',
+    address: '',
   });
   const { total, setCart } = useCart();
   const router = useRouter();
@@ -19,7 +18,8 @@ const Modal = ({ setModal }) => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    fetch('http://localhost:3000/api/orders', {
+    console.log({ ...orderData, total });
+    fetch('/api/orders', {
       method: 'POST',
       body: JSON.stringify({ ...orderData, total }),
       headers: {
@@ -31,7 +31,7 @@ const Modal = ({ setModal }) => {
         router.push(`/orders/${data._id}`);
         // Clear Cart
         setCart([]);
-        fetch('http://localhost:3000/api/cart', {
+        fetch('/api/cart', {
           method: 'PUT',
           body: JSON.stringify([]),
           headers: {
@@ -66,8 +66,8 @@ const Modal = ({ setModal }) => {
                 type="text"
                 id="name"
                 required
-                name="name"
-                value={orderData.name}
+                name="customer"
+                value={orderData.customer}
                 onChange={changeHandler}
                 className="block w-full outline-none border-b-2 pl-3 py-1 transition duration-300 hover:border-b-main focus:border-b-main"
               />
@@ -84,26 +84,8 @@ const Modal = ({ setModal }) => {
                 type="text"
                 id="name"
                 required
-                name="adress"
-                value={orderData.adress}
-                onChange={changeHandler}
-                className="block w-full outline-none border-b-2 pl-3 py-1 transition duration-300 hover:border-b-main focus:border-b-main"
-              />
-            </div>
-            <div>
-              <label
-                className="capitalize text-slate-700 font-semibold"
-                htmlFor="name"
-              >
-                Phone Number
-              </label>
-              <input
-                placeholder="e.g +201212526626"
-                type="text"
-                id="phone"
-                required
-                name="phone"
-                value={orderData.phone}
+                name="address"
+                value={orderData.address}
                 onChange={changeHandler}
                 className="block w-full outline-none border-b-2 pl-3 py-1 transition duration-300 hover:border-b-main focus:border-b-main"
               />

@@ -11,7 +11,6 @@ export async function getServerSideProps({ req, res }) {
     'Cache-Control',
     'public, s-maxage=10, stale-while-revalidate=59'
   );
-
   try {
     // Trust User
     jwt.verify(req.cookies.adminToken, process.env.NEXT_PUPLIC_JWTSECRET);

@@ -1,3 +1,5 @@
+import dbConnect from 'lib/mongo';
+import Order from 'models/Order';
 import { OrderTrack } from '../../components/index';
 const ICONS = [
   { name: 'payment', src: '/imgs/paid.png' },
@@ -6,7 +8,7 @@ const ICONS = [
   { name: 'delivered', src: '/imgs/delivered.png' },
 ];
 
-const Order = () => {
+const OrderDetails = ({ order }) => {
   return (
     <div className="flex flex-col lg:flex-row gap-8 w-[95%] sm:w-[80%] mx-auto mt-16">
       {/* Left Side */}
@@ -22,10 +24,10 @@ const Order = () => {
           </thead>
           <tbody>
             <tr>
-              <td>129837819237</td>
-              <td>Jhon Doe</td>
-              <td>Elton st. 212-33 LA</td>
-              <td>$79.80</td>
+              <td>{order._id.slice(0, 8)}...</td>
+              <td>{order.customer}</td>
+              <td>{order.address}</td>
+              <td>${order.total}</td>
             </tr>
           </tbody>
         </table>
@@ -40,7 +42,7 @@ const Order = () => {
       </div>
 
       {/* Right Side */}
-      <div className=" bg-black/80 text-white p-8 mt-10 lg:mt-0 rounded-md text-start lg:w-[300px]">
+      {/* <div className=" bg-black/80 text-white p-8 mt-10 lg:mt-0 rounded-md text-start lg:w-[300px]">
         <h1 className="uppercase text-xl font-semibold mb-5">Cart Total</h1>
         <h3 className="font-semibold text-lg">
           Subtotal: $<span className=" text-md font-light">102.50</span>
@@ -54,9 +56,30 @@ const Order = () => {
         <button className="py-1 mt-5 bg-white text-green-600 text-lg font-semibold w-full rounded-md hover:brightness-90">
           PAID
         </button>
-      </div>
+      </div> */}
     </div>
   );
 };
 
-export default Order;
+export default OrderDetails;
+
+// Fetch Order
+export async function getServerSideProps({ params }) {
+  await dbConnect();
+  const doc = await Order.findById(
+    params.id,
+    { updatedAt: 0, __v: 0 },
+    { lean: true }
+  );
+  const order = {
+    ...doc,
+    _id: JSON.parse(JSON.stringify(doc._id)),
+    createdAt: JSON.parse(JSON.stringify(doc.createdAt)),
+  };
+
+  return {
+    props: {
+      order,
+    },
+  };
+}
