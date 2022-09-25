@@ -17,7 +17,7 @@ export function CartProvidor({ children }) {
 
   // Fetch cart items from database
   useEffect(() => {
-    fetch('http://localhost:3000/api/cart')
+    fetch('/api/cart')
       .then((res) => res.json())
       .then((data) => {
         setCart(data);
@@ -34,7 +34,7 @@ export function CartProvidor({ children }) {
     // Delete from UI
     setCart(cart.filter((item) => item._id !== id));
     // Delete from Database - send delete request
-    fetch('http://localhost:3000/api/cart', {
+    fetch('/api/cart', {
       method: 'DELETE',
       body: JSON.stringify(id),
       headers: {
