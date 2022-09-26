@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 import reactDom from 'react-dom';
 
-const Modal = ({ setModal }) => {
+const OrderModal = ({ setModal }) => {
   const [orderData, setOrderData] = useState({
     customer: '',
     address: '',
@@ -18,7 +18,6 @@ const Modal = ({ setModal }) => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    console.log({ ...orderData, total });
     fetch('/api/orders', {
       method: 'POST',
       body: JSON.stringify({ ...orderData, total }),
@@ -110,4 +109,4 @@ const Modal = ({ setModal }) => {
   return null;
 };
 
-export default Modal;
+export default OrderModal;

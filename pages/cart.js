@@ -2,7 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useCart } from 'context/CartContext';
 import { useState } from 'react';
-import { Modal } from 'components/index';
+import { OrderModal } from 'components/index';
 
 const ShoppingCart = () => {
   const { cart, deleteHandler, total } = useCart();
@@ -83,7 +83,7 @@ const ShoppingCart = () => {
               Checkout
             </button>
           </div>
-          {showModal && <Modal setModal={setShowModal} />}
+          {showModal && <OrderModal setModal={setShowModal} />}
         </div>
       )}
     </>
