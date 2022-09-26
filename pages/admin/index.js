@@ -1,5 +1,8 @@
 import { useState } from 'react';
 import { ProductModal } from 'components/index';
+import dbConnect from 'lib/mongo';
+import Product from 'models/Product';
+import Order from 'models/Order';
 const jwt = require('jsonwebtoken');
 
 const Dashboard = ({ products, orders }) => {
@@ -27,13 +30,32 @@ export async function getServerSideProps({ req, res }) {
   try {
     // Trust User
     jwt.verify(req.cookies.adminToken, process.env.NEXT_PUPLIC_JWTSECRET);
-    // Fetch Data
-    const products = await fetch('http://localhost:3000/api/products').then(
-      (res) => res.json()
+
+    // connect to database
+    await dbConnect();
+
+    // Fetch Products
+    const productsDocs = await Product.find({}, { __v: 0 }, { lean: true });
+    const products = productsDocs.map((itm) => ({
+      ...itm,
+      extraOptions: itm.extraOptions.map((opt) =>
+        JSON.parse(JSON.stringify(opt))
+      ),
+      _id: JSON.parse(JSON.stringify(itm._id)),
+    }));
+
+    // Fetch Orders
+    const ordersDocs = await Order.find(
+      {},
+      { __v: 0, updatedAt: 0 },
+      { lean: true }
     );
-    const orders = await fetch('http://localhost:3000/api/orders').then((res) =>
-      res.json()
-    );
+    const orders = ordersDocs.map((itm) => ({
+      ...itm,
+      createdAt: JSON.parse(JSON.stringify(itm.createdAt)),
+      _id: JSON.parse(JSON.stringify(itm._id)),
+    }));
+
     return {
       props: {
         products,
