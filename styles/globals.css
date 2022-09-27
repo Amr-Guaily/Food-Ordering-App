@@ -14,9 +14,16 @@
     @apply flex items-center flex-col opacity-30;
   }
 }
+
 @layer components {
   .cart-td {
     @apply text-[16px] font-semibold text-gray-800;
+  }
+}
+
+@layer components {
+  .input-field {
+    @apply block w-full outline-none border-b-2 pl-3 py-1 transition duration-300 hover:border-b-main focus:border-b-main;
   }
 }
 

@@ -68,7 +68,7 @@ const OrderModal = ({ setModal }) => {
                 name="customer"
                 value={orderData.customer}
                 onChange={changeHandler}
-                className="block w-full outline-none border-b-2 pl-3 py-1 transition duration-300 hover:border-b-main focus:border-b-main"
+                className="input-field"
               />
             </div>
             <div className="my-4">
@@ -86,7 +86,7 @@ const OrderModal = ({ setModal }) => {
                 name="address"
                 value={orderData.address}
                 onChange={changeHandler}
-                className="block w-full outline-none border-b-2 pl-3 py-1 transition duration-300 hover:border-b-main focus:border-b-main"
+                className="input-field"
               />
             </div>
             <div className="flex justify-end gap-3 mt-8">
