@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 const OrderModal = ({ setModal }) => {
+  const [loading, setLoading] = useState(false);
   const [file, setFile] = useState(null);
   const [extra, setExtra] = useState({
     text: '',
@@ -79,12 +80,31 @@ const OrderModal = ({ setModal }) => {
     });
   };
 
-  const submitHandler = async () => {
-    // waiting for upload product img to cloudinary
-    const data = await cloudHandler();
-    console.log(data);
+  const submitHandler = async (e) => {
+    e.preventDefault();
+    setLoading(true);
 
-    // next..
+    // waiting for upload product img to cloudinary
+    const cloudinaryRes = await cloudHandler();
+    const { url, public_id, signature, version } = cloudinaryRes;
+    const productDoc = {
+      _id: public_id,
+      img: url,
+      signature,
+      version,
+      ...formData,
+    };
+
+    await fetch('/api/products', {
+      method: 'POST',
+      body: JSON.stringify(productDoc),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    setLoading(false);
+    setModal(false);
   };
 
   return (
@@ -208,11 +228,11 @@ const OrderModal = ({ setModal }) => {
             ))}
           </div>
           <button
-            type="button"
-            className="mt-10 block ml-auto px-3 py-0.5 rounded-md text-white bg-main hover:brightness-90 transition duration-300"
+            disabled={loading}
+            className="mt-8 block ml-auto px-6 py-1 rounded-md text-white bg-main hover:brightness-90 transition duration-300 disabled:bg-opacity-80"
             onClick={submitHandler}
           >
-            Confirm
+            {loading ? '...processing' : 'confirm'}
           </button>
         </form>
       </div>

@@ -29,7 +29,6 @@ export async function getServerSideProps({ res }) {
     extraOptions: itm.extraOptions.map((opt) =>
       JSON.parse(JSON.stringify(opt))
     ),
-    _id: JSON.parse(JSON.stringify(itm._id)),
   }));
 
   return {

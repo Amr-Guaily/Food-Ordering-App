@@ -4,11 +4,11 @@ const Pizza = ({ pizzaData }) => {
   return (
     <Link href={`/product/${pizzaData._id}`} passHref>
       <div className="flex flex-col overflow-hidden rounded-md bg-white shadow-lg cursor-pointer">
-        <div className="w-full ">
+        <div className="w-full h-[200px]">
           <img
-            src="https://images.unsplash.com/photo-1594007654729-407eedc4be65?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8cGl6emF8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60"
-            alt=""
-            className="w-full object-cover max-h-[220px]"
+            src={pizzaData.img}
+            alt="pizza-img"
+            className="w-full object-cover h-full max-h-full"
           />
         </div>
 
@@ -19,7 +19,9 @@ const Pizza = ({ pizzaData }) => {
           <span className="font-semibold text-gray-800 block my-2">
             ${pizzaData.prices[0]}
           </span>
-          <p className="text-gray-600 leading-5 mb-3">{pizzaData.desc}</p>
+          <p className="text-gray-600 leading-5 mb-3">
+            {pizzaData.desc.slice(0, 80)}...
+          </p>
         </div>
       </div>
     </Link>

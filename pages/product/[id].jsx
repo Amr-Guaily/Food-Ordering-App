@@ -5,15 +5,6 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 
-const dummy_data = {
-  id: 1,
-  imgUrl:
-    'https://images.unsplash.com/photo-1594007654729-407eedc4be65?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8cGl6emF8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60',
-  name: 'CAMPAGNOLA',
-  price: [19.9, 23.9, 27.9],
-  desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis arcu purus, rhoncus fringilla vestibulum vel, dignissim vel ante. Nulla facilisi. Nullam a urna sit amet tellus pellentesque egestas in in ante.',
-};
-
 const PizzaDetails = ({ pizzaData }) => {
   const [price, setPrice] = useState({
     original: pizzaData.prices[0],
@@ -40,7 +31,7 @@ const PizzaDetails = ({ pizzaData }) => {
   const submitHandler = () => {
     const orderData = {
       name: pizzaData.title,
-      img: dummy_data.imgUrl,
+      img: pizzaData.img,
       extras,
       price: price.original + price.additional,
       quantity,
@@ -63,7 +54,7 @@ const PizzaDetails = ({ pizzaData }) => {
     <div className="w-[95%] md:w-[80%] mx-auto flex flex-col sm:flex-row gap-6 justify-center mt-[3rem] pb-20">
       <div className="max-w-[450px] mx-auto">
         <img
-          src={dummy_data.imgUrl}
+          src={pizzaData.img}
           className="object-cover rounded-md w-full max-h-[450px]"
           alt="pizza-image"
         />
