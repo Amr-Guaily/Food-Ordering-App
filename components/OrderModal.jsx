@@ -26,17 +26,17 @@ const OrderModal = ({ setModal }) => {
       },
     })
       .then((res) => res.json())
-      .then((data) => {
+      .then(async (data) => {
         router.push(`/orders/${data._id}`);
         // Clear Cart
-        setCart([]);
-        fetch('/api/cart', {
+        await fetch('/api/cart', {
           method: 'PUT',
           body: JSON.stringify([]),
           headers: {
             'Content-Type': 'application/json',
           },
         });
+        setCart([]);
       });
   };
 
@@ -91,6 +91,7 @@ const OrderModal = ({ setModal }) => {
             </div>
             <div className="flex justify-end gap-3 mt-8">
               <button
+                type="button"
                 onClick={() => setModal(false)}
                 className="border-main border px-3 py-0.5 rounded-md text-slate-900"
               >
