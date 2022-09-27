@@ -23,6 +23,7 @@ const Login = () => {
         'Content-Type': 'application/json',
       },
     });
+
     if (res.status === 200) {
       router.push('/admin');
     } else {

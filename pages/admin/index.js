@@ -29,7 +29,7 @@ export async function getServerSideProps({ req, res }) {
   );
   try {
     // Trust User
-    jwt.verify(req.cookies.adminToken, process.env.NEXT_PUPLIC_JWTSECRET);
+    jwt.verify(req.cookies.adminToken, 'ngjklsdfaauisdhbvancdskfhsnaopgf');
 
     // connect to database
     await dbConnect();

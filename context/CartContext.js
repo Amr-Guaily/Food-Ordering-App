@@ -30,11 +30,11 @@ export function CartProvidor({ children }) {
   }, [cart]);
 
   // Delete from cart
-  const deleteHandler = (id) => {
+  const deleteHandler = async (id) => {
     // Delete from UI
     setCart(cart.filter((item) => item._id !== id));
     // Delete from Database - send delete request
-    fetch('/api/cart', {
+    await fetch('/api/cart', {
       method: 'DELETE',
       body: JSON.stringify(id),
       headers: {
